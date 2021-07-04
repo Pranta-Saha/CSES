@@ -5,66 +5,73 @@ int main()
 {
 	int n,m,i,j,tmp,lft,rht,cnt=0;
 	cin>>n>>m;
-	map<int,int>mp;
-	mp[n+1]=n;
-	vector<int>arr(n);
-	for(i=0;i<n;i++)
+	vector<int>pos(n+2,1e9);
+	pos[0]=0;
+	pos[n+1]=n+1;
+	vector<int>arr(n+1);
+	for(i=1;i<=n;i++)
 	{
-		cin>>tmp;
-		arr[i]=tmp;
-		if(mp.find(tmp-1) == mp.end())
-		{
-			cnt++;
-		}
-		mp[tmp]=i;
+		cin>>arr[i];
+		pos[ arr[i] ] = i;
+		if( pos[arr[i]-1] > pos[ arr[i] ] ) cnt++;
 	}
-cout<<cnt<<endl;
-	mp[0]=-1;
+	//cout<<cnt<<endl;
+	cnt++;
 	while(m--)
 	{
 		cin>>lft>>rht;
-		lft--;
-		rht--;
+		if(abs(arr[lft]-arr[rht]) == 1 )
 		{
-			if( mp[ arr[lft]-1 ] < mp[ arr[lft] ] )
+			if(arr[lft]<arr[rht])
 			{
-				cnt++;
+				if( pos[ arr[lft]-1 ] < pos[ arr[lft] ] ) cnt++;
+				if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt++;
+				if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt++;
 			}
-			if( mp[ arr[lft] ] < mp[ arr[lft]+1 ] )
+			else
 			{
-				cnt++;
-			}
-			if( mp[ arr[rht]-1 ] < mp[ arr[rht] ] )
-			{
-				cnt++;
-			}
-			if( mp[ arr[rht] ] < mp[ arr[rht]+1 ] )
-			{
-				cnt++;
-			}
-		cout<<cnt<<" ";
-			mp[ arr[lft] ] = rht;
-			mp[ arr[rht] ] = lft;
-			swap(arr[lft],arr[rht]);
-
-			if( mp[ arr[lft]-1 ] < mp[ arr[lft] ] )
-			{
-				cnt--;
-			}
-			if( mp[ arr[lft] ] < mp[ arr[lft]+1 ] )
-			{
-				cnt--;
-			}
-			if( mp[ arr[rht]-1 ] < mp[ arr[rht] ] )
-			{
-				cnt--;
-			}
-			if( mp[ arr[rht] ] < mp[ arr[rht]+1 ] )
-			{
-				cnt--;
+				if( pos[ arr[rht]-1 ] < pos[ arr[rht] ] ) cnt++;
+				if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt++;
+				if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt++;
 			}
 		}
+		else
+		{
+			if( pos[ arr[lft]-1 ] < pos[ arr[lft] ] ) cnt++;
+			if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt++;
+			if( pos[ arr[rht]-1 ] < pos[ arr[rht] ] ) cnt++;
+			if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt++;
+		}
+
+		pos[ arr[lft] ] = rht;
+		pos[ arr[rht] ] = lft;
+		swap(arr[lft],arr[rht]);
+
+		if(abs(arr[lft]-arr[rht]) == 1 )
+		{
+			if(arr[lft]<arr[rht])
+			{
+				if( pos[ arr[lft]-1 ] < pos[ arr[lft] ] ) cnt--;
+				if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt--;
+				if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt--;
+			}
+			else
+			{
+				if( pos[ arr[rht]-1 ] < pos[ arr[rht] ] ) cnt--;
+				if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt--;
+				if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt--;
+			}
+		}
+		else
+		{
+			if( pos[ arr[lft]-1 ] < pos[ arr[lft] ] ) cnt--;
+			if( pos[ arr[lft] ] < pos[ arr[lft]+1 ] ) cnt--;
+			if( pos[ arr[rht]-1 ] < pos[ arr[rht] ] ) cnt--;
+			if( pos[ arr[rht] ] < pos[ arr[rht]+1 ] ) cnt--;
+		}
 		cout<<cnt<<endl;
+
 	}
+	
 	return 0;
 }
