@@ -11,26 +11,15 @@ int main()
 	int x,n,i,p,lft,rht,gap;
 	cin>>x>>n;
 	multiset<int>gaps;
-	set<int>positions;
+	set<int>positions={0,x};
 	gaps.insert(x);
-
 	while(n--)
 	{
 		cin>>p;
 		positions.insert(p);
 		auto it = positions.find(p);
-		if( it == positions.begin() )
-		{
-			lft = 0;
-		}
-		else 
-		{
-			it--;
-			lft = *it;
-			it++;
-		}
-		it++;
-		rht = (it == positions.end())? x : *it;
+		lft = *prev(it);
+		rht = *next(it);
 	      	gap = rht-lft;
 		gaps.erase( gaps.find(gap) );
 		gaps.insert( p-lft );
