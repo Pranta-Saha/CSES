@@ -1,5 +1,5 @@
 // For each pair of values, I just find if there available (x-sum of values of current pair)
-// As the index I found can be index of current pair, so check it three time.
+// As the index I found can be index of current pair, so checked it three times.
 
 #include<bits/stdc++.h>
 using namespace std;
