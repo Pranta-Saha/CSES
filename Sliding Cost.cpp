@@ -1,5 +1,3 @@
-// I used policy based data structure. As there is no way to keep multiple values, I made pair with indx to get uniqeness.
-//
 
 #include<bits/stdc++.h>
 using namespace std;
